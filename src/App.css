@@ -220,6 +220,20 @@
   justify-content: center;
 }
 
+.product .info button.active  {
+  background: #ffffff;
+  border-radius: 4px;
+  width: 100%;
+  padding: 14px;
+  color: #2068f8;
+  border: 2px solid #2068f8 ;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .product .info button img {
   width: 18px;
   height: 18px;

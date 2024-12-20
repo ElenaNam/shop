@@ -8,59 +8,69 @@ import { Link, useParams } from "react-router";
 import { Reviews } from "./Reviews";
 
 export const Product = () => {
-  const [product, setProduct] = useState<ProductType | null>(null);
+	const [product, setProduct] = useState<ProductType | null>(null);
+	const [isProductInCart, setIsProductIncart] = useState<boolean>(false);
 
-  const { productId } = useParams();
+	const onClickHandler = () => {
+		setIsProductIncart(true)
+		alert('Товар успешно добавлен в корзину');
+	} 
 
-  useEffect(() => {
-	axios
-	  .get(
-		`https://masterclass.kimitsu.it-incubator.io/api/products/${productId}`
-	  )
-	  .then((res) => {
-		const product = res.data;
-		console.log(res)
-		setProduct(product);
-	  });
-  }, []);
+	const { productId } = useParams();
 
-  if (product === null)
+	useEffect(() => {
+		axios
+		.get(
+			`https://masterclass.kimitsu.it-incubator.io/api/products/${productId}`
+		)
+		.then((res) => {
+			const product = res.data;
+			console.log(res)
+			setProduct(product);
+		});
+	}, []);
+
+	if (product === null)
+		return (
+			<div>
+				<h2>Продукт загружается...</h2>
+			</div>
+		);
+
 	return (
-	  <div>
-		<h2>Продукт загружается...</h2>
-	  </div>
-	);
+		<div>
+			<div className="arrowBack">
+				<Link to={"/"}>
+					<img src={arrowBack} alt="arrowBack" />
+					Back to Best Seller
+				</Link>
+			</div>
 
-  return (
-	<div>
-	  <div className="arrowBack">
-		<Link to={"/"}>
-		  <img src={arrowBack} alt="arrowBack" />
-		  Back to Best Seller
-		</Link>
-	  </div>
+			<div className="product">
+				<img src={product.image} alt="" />
+				<div className="info">
+				<p className="title">{product.title}</p>
+				<p className="price">$ {product.price}</p>
+				<div className="rating">
+					<p>Rating: {product.rating.rate}</p>
+					<img src={rating} alt="" />
+				</div>
+				<div className="category">
+					<span>Category:</span>
+					<p>{product.category}</p>
+				</div>
+				<p className="description">{product.description}</p>
 
-	  <div className="product">
-		<img src={product.image} alt="" />
-		<div className="info">
-		  <p className="title">{product.title}</p>
-		  <p className="price">$ {product.price}</p>
-		  <div className="rating">
-			<p>Rating: {product.rating.rate}</p>
-			<img src={rating} alt="" />
-		  </div>
-		  <div className="category">
-			<span>Category:</span>
-			<p>{product.category}</p>
-		  </div>
-		  <p className="description">{product.description}</p>
-		  <button>
-			<img src={cartWhite} alt="" />
-			Add to cart
-		  </button>
+				<button 
+						onClick={onClickHandler}
+						className={isProductInCart ? 'active button' : 'button'}
+					>
+					<img src={cartWhite} alt="" />
+					{isProductInCart ? 'Go to cart' : 'Add to cart'}
+				</button>
+				</div>
+			</div>
+			<Reviews />
 		</div>
-	  </div>
-	  <Reviews />
-	</div>
-  );
+	);
 };
