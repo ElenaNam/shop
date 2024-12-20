@@ -5,6 +5,7 @@ import cartWhite from "./assets/img/cartWhite.svg";
 import arrowBack from "./assets/img/arrowBack.svg";
 import axios from "axios";
 import { Link, useParams } from "react-router";
+import { Reviews } from "./Reviews";
 
 export const Product = () => {
   const [product, setProduct] = useState<ProductType | null>(null);
@@ -59,6 +60,7 @@ export const Product = () => {
 		  </button>
 		</div>
 	  </div>
+	  <Reviews />
 	</div>
   );
 };
